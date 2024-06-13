@@ -1,7 +1,7 @@
 // Comisión de Matías - Joray (77302/9); Esteban (93509/6); Galasso (94698/3); Farías Jomñuk (86909/7).
-// Propuesta de interacción: https://youtu.be/Bb8fH30RcTk
-//hola
-let monitorear = true;
+// Video explicativo: https://youtu.be/i5E8lyjL_Lk
+
+let monitorear = false;
 
 let AMP_MIN = 0.020;
 let AMP_MAX = 0.10;
@@ -142,7 +142,7 @@ function draw() {
         for (let i = 0; i < 101; i++) {
           push();
           rectMode(CENTER);
-          fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect), 255, map(sin((frameCount * 0.1 + i) * 0.4), -1, brillov1, 0, 255));
+          fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect), 200, map(sin((frameCount * 0.1 + i) * 0.4), -1, brillov1, 0, 255));
                                 //HUE                                  SAT                           BRILLO                        
           rect(ac * i, posrect + j * altorect, ac, map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 82, altorect));
           pop();
