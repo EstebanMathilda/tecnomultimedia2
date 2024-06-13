@@ -4,10 +4,10 @@
 let monitorear = true;
 
 let AMP_MIN = 0.020;
-let AMP_MAX = 0.12;
+let AMP_MAX = 0.10;
 
-let FREC_MIN = 80;
-let FREC_MAX = 350;
+let FREC_MIN = 20;
+let FREC_MAX = 800;
 
 let mic;
 let pitch;
@@ -48,11 +48,16 @@ function preload() {
     });
   }
 }
+
+//FILAS Y COLUMNAS
 let ac;
 let colorRandom;
 let numfilas;
 let altorect;
-let filas;
+let numcol;
+let segmentos = [];  //arreglo para separar segmentos
+let numsegmentos;
+
 
 function setup() {
   createCanvas(displayWidth, displayHeight);
@@ -71,10 +76,13 @@ function setup() {
 
   antesHabiaSonido = false;
 
-  ac = width / 81;
+  ac = width / 101;
   colorRandom = random(10, 360);
   numfilas = floor(height / (height / 10));
+  numcol = 41;
   altorect = height / 10;
+  numsegmentos = 10;
+
 }
 
 function draw() {
@@ -91,17 +99,14 @@ function draw() {
 
   if (estado == "inicio") {
     background(0);
-    for (let j = 0; j < numfilas; j++) { // Bucle adicional para las filas
-      for (let i = 0; i < 81; i++) {
-        push();
-        rectMode(CENTER);
-        fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect), 100, map(sin((frameCount * 0.1 + i) * 0.4), -1, 5, 0, 255));
-        rect(ac * i, altorect / 2 + j * altorect, ac, map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 80, altorect));
-        pop();
-      }
-    }
+    fila(15, altorect / 2);
+    
+    //filas1(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 100, height/8));
+    //filas2(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 255, height));
 
     if (inicioElSonido) {
+      fila(5, altorect / 2);
+
         /*for(let i=0; i<cantidadColumnas; i++){
         columnas[i] = new Columna();
         columnas.dibujar();*/
@@ -110,6 +115,10 @@ function draw() {
     }
 
     if (haySonido) {
+      //filas1(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 100, height/8));
+      //filas2(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 255, height));
+      fila(5, altorect / 2);
+
       //Estado
       //columnas[cantidadColumnas] = new Columna();
       
@@ -123,6 +132,53 @@ function draw() {
       //Estado SILENCIO
       let ahora = millis();
     }
+
+  
+    
+    function fila (brillov1, posrect) {
+      
+
+      for (let j = 0; j < numfilas; j++) { // Bucle adicional para las filas
+        for (let i = 0; i < 101; i++) {
+          push();
+          rectMode(CENTER);
+          fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect), 255, map(sin((frameCount * 0.1 + i) * 0.4), -1, brillov1, 0, 255));
+                                //HUE                                  SAT                           BRILLO                        
+          rect(ac * i, posrect + j * altorect, ac, map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 82, altorect));
+          pop();
+        }
+      }
+    }
+      
+
+    /*function filas1(cantidad, tono){
+      for(let j=0; j<numfilas; j++){
+        for (let i = 0; i < cantidad; i++) {
+          push();
+          rectMode(CENTER);
+          fill(tono, 50, map(sin((frameCount * 0.1 + i) * 0.4), -1, 1, 0, 255));
+          // noStroke();
+          rect(cantidad * i + 2, altorect * j * 2 , ac, map(gestorAmp.filtrada, AMP_MIN + AMP_MAX, AMP_MAX, 100, height/8)/4);
+          pop();
+          }
+        }
+      }
+    
+      function filas2(cantidad, tono){
+        for(let j=0; j<numfilas; j++){
+          for (let i = 0; i < cantidad; i++) {
+            push();
+            rectMode(CENTER);
+            fill(tono, 25, map(sin((frameCount * 0.1 + i) * 0.4), -1, 5, 0, 255));
+            // noStroke();
+            rect(cantidad * i+ 2, altorect/2 + j * altorect , ac, map(gestorAmp.filtrada, AMP_MIN, AMP_MAX-AMP_MIN, 200, height/8)/4);
+            pop();
+            }
+          }
+        }
+          */
+
+    //altorect / 2 + j * altorect
 /*
   }else if (estado == "grosor"){
 
