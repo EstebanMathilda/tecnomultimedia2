@@ -1,7 +1,7 @@
 // Comisión de Matías - Joray (77302/9); Esteban (93509/6); Galasso (94698/3); Farías Jomñuk (86909/7).
 // Video explicativo: https://youtu.be/i5E8lyjL_Lk
 
-let monitorear = false;
+let monitorear = true;
 
 let AMP_MIN = 0.020;
 let AMP_MAX = 0.10;
