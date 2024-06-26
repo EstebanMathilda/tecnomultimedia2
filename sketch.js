@@ -11,7 +11,7 @@ let FREC_MAX = 800;
 
 let mic;
 let pitch;
-let audioCotext;
+let audioContext;
 
 let gestorAmp;
 let gestorPitch;
@@ -190,8 +190,10 @@ function draw() {
       }
 */
       if (monitorear) {
+        
         gestorAmp.dibujar(100, 100);
         gestorPitch.dibujar(500, 100);
+       
       }
   
       printData();

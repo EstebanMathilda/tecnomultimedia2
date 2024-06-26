@@ -68,13 +68,13 @@ class GestorSenial{
 			let altura1 = map( this.mapeada[i-1] , 0.0 , 1.0 , y_+altoGestor , y_ );
 			let altura2 = map( this.mapeada[i] , 0.0 , 1.0 , y_+altoGestor , y_ );
 
-			stroke(255);
+			stroke(25);
 			line( x_+i-1 , altura1 , x_+i , altura2 );
 
 			altura1 = map( this.histFiltrada[i-1] , 0.0 , 1.0 , y_+altoGestor , y_ );
 			altura2 = map( this.histFiltrada[i] , 0.0 , 1.0 , y_+altoGestor , y_ );
 
-			stroke(0,255,0);
+			stroke(255);
 			line( x_+i-1 , altura1 , x_+i , altura2 );
 
 			if( this.dibujarDerivada ){
