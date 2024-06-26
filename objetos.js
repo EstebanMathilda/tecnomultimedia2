@@ -1,7 +1,7 @@
 class Columna {
     constructor(paleta, cantidadCeldas, cantidadColumnas, totalCeldas){
         this.grosor = 1;
-        this.tinte = paleta.hue;
+        this.tinte = colorRandom.hue;
         this.cantidad = width / cantidadColumnas / cantidadCeldas;
         this.anchoAnt = 0;
     }
@@ -21,7 +21,7 @@ class Columna {
   
 }
 
-/*class Rectangulo {
+/*class Celda {
     constructor(x, y, width, maxHeight) {
       this.x = x;
       this.y = y;
