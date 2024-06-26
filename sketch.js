@@ -94,7 +94,7 @@ function setup() {
 
   cantidadFilas = random(5, 11);
   cantidadColumnas = random(5, 7);
-  cantidadCeldas = random(5, 12);
+  cantidadCeldas = random(10, 12);
 }
 
 function draw() {
@@ -125,18 +125,18 @@ function draw() {
         cantidadCeldas = random(5, 12);
         
         push();
-        translate(totalCeldas, 0);
+       
         columnas[i] = new Columna(
           colorRandom,
           cantidadCeldas,
           cantidadColumnas,
           totalCeldas
         );
-        translate (totalCeldas);
-        console.log (totalCeldas);
+
+        translate(columnas[i].cantidad * totalCeldas, 0);
         columnas[i].dibujar();
         pop();
-        totalCeldas =+ cantidadCeldas * i;
+        totalCeldas =+ cantidadCeldas;
       }
       
     }

@@ -10,9 +10,7 @@ class Columna {
     }
 
     dibujar(){
-      console.log(this.destello);
-        background(0);
-        push()
+        push();
         //rectMode(CENTER);
         if (boolean(this.destello) == true) {
         for (let i = 0; i < cantidadCeldas; i++) {
