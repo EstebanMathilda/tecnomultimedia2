@@ -115,12 +115,19 @@ function draw() {
     //filas1(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 100, height/8));
     //filas2(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 255, height));
 
+    
+
     if (inicioElSonido) {
       //fila(5, altorect / 2);
-      colorRandom = colorPaleta.darUnColor();
+
+    
+      totalCeldas = 0;
       for (let i = 0; i < cantidadColumnas; i++) {
+        colorRandom = colorPaleta.darUnColor();
         cantidadCeldas = random(5, 12);
-        totalCeldas =+ cantidadCeldas;
+        
+        push();
+        translate(totalCeldas, 0);
         columnas[i] = new Columna(
           colorRandom,
           cantidadCeldas,
@@ -128,7 +135,10 @@ function draw() {
           totalCeldas
         );
         columnas[i].dibujar();
+        pop();
+        totalCeldas =+ cantidadCeldas;
       }
+      
     }
 
     if (haySonido) {
