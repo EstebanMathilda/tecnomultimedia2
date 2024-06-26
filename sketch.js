@@ -3,8 +3,8 @@
 
 let monitorear = true;
 
-let AMP_MIN = 0.020;
-let AMP_MAX = 0.10;
+let AMP_MIN = 0.02;
+let AMP_MAX = 0.1;
 
 let FREC_MIN = 20;
 let FREC_MAX = 800;
@@ -21,14 +21,24 @@ let antesHabiaSonido; // moemoria del estado anterior del sonido
 
 let estado = "inicio";
 let columnas = [];
-let cantidadFilas = 41;
-let cantidadColumnas = 1;
-let cantidadCeldas = 41;
+
+let cantidadFilas;
+let cantidadColumnas;
+let cantidadCeldas;
+
+let totalCeldas;
 
 let colorPaleta;
+
+let colorRandom;
+let hue_c;
+let saturation_c;
+let brightness_c;
+let alpha_c;
+
 let imagenPaleta = [];
 
-let marca;  
+let marca;
 
 const model_url =
   "https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/";
@@ -51,13 +61,14 @@ function preload() {
 
 //FILAS Y COLUMNAS
 let ac;
-let colorRandom;
+
 let numfilas;
 let altorect;
 let numcol;
-let segmentos = [];  //arreglo para separar segmentos
+let segmentos = []; //arreglo para separar segmentos
 let numsegmentos;
 
+let startPitch;
 
 function setup() {
   createCanvas(displayWidth, displayHeight);
@@ -77,16 +88,18 @@ function setup() {
   antesHabiaSonido = false;
 
   ac = width / 101;
-  colorRandom = random(10, 360);
+  // colorRandom = random(10, 360);
   numfilas = floor(height / (height / 10));
   numcol = 41;
   altorect = height / 10;
   numsegmentos = 10;
 
+  cantidadFilas = random(5, 11);
+  cantidadColumnas = random(5, 7);
+  cantidadCeldas = random(5, 12);
 }
 
 function draw() {
-
   let vol = mic.getLevel(); // cargo en vol la amplitud del micrófono (señal cruda);
   gestorAmp.actualizar(vol);
 
@@ -94,34 +107,38 @@ function draw() {
 
   let inicioElSonido = haySonido && !antesHabiaSonido; // evendo de INICIO de un sonido
   let finDelSonido = !haySonido && antesHabiaSonido; // evento de fIN de un sonido
-  //columnas[cantidadColumnas] = new Columna();
-  //columnas[1](colorPaleta, cantidadCeldas).dibujar();
 
   if (estado == "inicio") {
     background(0);
-    fila(15, altorect / 2);
-    
+    //fila(15, altorect / 2);
+
     //filas1(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 100, height/8));
     //filas2(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 255, height));
 
     if (inicioElSonido) {
-      fila(5, altorect / 2);
-
-        /*for(let i=0; i<cantidadColumnas; i++){
-        columnas[i] = new Columna();
-        columnas.dibujar();*/
+      //fila(5, altorect / 2);
+      colorRandom = colorPaleta.darUnColor();
+      for (let i = 0; i < cantidadColumnas; i++) {
+        cantidadCeldas = random(5, 12);
+        totalCeldas =+ cantidadCeldas;
+        columnas[i] = new Columna(
+          colorRandom,
+          cantidadCeldas,
+          cantidadColumnas,
+          totalCeldas
+        );
+        columnas[i].dibujar();
       }
-
     }
 
     if (haySonido) {
       //filas1(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 100, height/8));
       //filas2(ac,map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 255, height));
-      fila(5, altorect / 2);
+
+      //fila(5, altorect / 2);
 
       //Estado
-      //columnas[cantidadColumnas] = new Columna();
-      
+      columnas[cantidadColumnas] = new Columna();
     }
 
     if (finDelSonido) {
@@ -133,23 +150,34 @@ function draw() {
       let ahora = millis();
     }
 
-  
-    
-    function fila (brillov1, posrect) {
-      
-
-      for (let j = 0; j < numfilas; j++) { // Bucle adicional para las filas
+    function fila(brillov1, posrect) {
+      for (let j = 0; j < numfilas; j++) {
+        // Bucle adicional para las filas
+        colorRandom = colorPaleta.darUnColor();
+        hue_c = colorRandom.hue;
+        saturation_c = colorRandom.saturation;
+        brightness_c = colorRandom.brightness;
+        alpha_c = colorRandom.alpha;
         for (let i = 0; i < 101; i++) {
           push();
+
           rectMode(CENTER);
-          fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect), 200, map(sin((frameCount * 0.1 + i) * 0.4), -1, brillov1, 0, 255));
-                                //HUE                                  SAT                           BRILLO                        
-          rect(ac * i, posrect + j * altorect, ac, map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 82, altorect));
+          fill(
+            hue_c,
+            map(sin((frameCount * 0.5 + i) * 0.5), -1, brillov1, 0, 255),
+            map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, altorect)
+          );
+          //HUE                                  SAT                           BRILLO
+          rect(
+            ac * i,
+            posrect + j * altorect,
+            ac,
+            map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 82, altorect)
+          );
           pop();
         }
       }
     }
-      
 
     /*function filas1(cantidad, tono){
       for(let j=0; j<numfilas; j++){
@@ -179,7 +207,7 @@ function draw() {
           */
 
     //altorect / 2 + j * altorect
-/*
+    /*
   }else if (estado == "grosor"){
 
     if(inicioElSonido){ //Evento
@@ -266,31 +294,36 @@ function draw() {
     antesHabiaSonido = haySonido;
   }
 
-// ---- Debug ---
-  function printData(){
+  // ---- Debug ---
+  function printData() {
     //background(255);
     console.log(estado);
     console.log(gestorAmp.filtrada);
     console.log(gestorPitch.filtrada);
-    }
+    console.log(colorPaleta.darUnColor());
+  }
 
-// ---- Pitch detection ---
-function startPitch() {
-  pitch = ml5.pitchDetection(model_url, audioContext, mic.stream, modelLoaded);
-}
+  // ---- Pitch detection ---
+  function startPitch() {
+    pitch = ml5.pitchDetection(
+      model_url,
+      audioContext,
+      mic.stream,
+      modelLoaded
+    );
+  }
 
-function modelLoaded() {
-  getPitch();
-}
-
-function getPitch() {
-  pitch.getPitch(function (err, frequency) {
-    if (frequency) {
-      gestorPitch.actualizar(frequency);
-      //console.log(frequency);
-    }
+  function modelLoaded() {
     getPitch();
-  });
+  }
+
+  function getPitch() {
+    pitch.getPitch(function (err, frequency) {
+      if (frequency) {
+        gestorPitch.actualizar(frequency);
+        //console.log(frequency);
+      }
+      getPitch();
+    });
+  }
 }
-
-
