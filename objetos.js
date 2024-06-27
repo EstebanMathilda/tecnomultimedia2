@@ -48,11 +48,11 @@ class Columna {
     this.brillo = colorRandom.brightness;
 
     this.celdas = [];
-    
+
     let celdaAncho = this.ancho / 10;
     for (let i = 0; i < 10; i++) {
-      let brillo = map(i, 0, 9, 0, 255);
-      this.celdas.push(new Celda(this.x + i * celdaAncho, this.y, celdaAncho, this.altura, this.color, brillo, this.tinte, this.saturacion, this.brillo));
+      //let brillo = map(i, 0, 9, 0, 255);
+      this.celdas.push(new Celda(this.x + i * celdaAncho, this.y, celdaAncho, this.altura, this.color, this.brillo, this.tinte, this.saturacion, this.brillo));
     }
 
     this.desfase = random(-2.0, 2.0);
