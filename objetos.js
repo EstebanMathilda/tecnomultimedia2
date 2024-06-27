@@ -14,7 +14,7 @@ class Fila {
       let ancho = (i % 2 === 0) ? colAncho1 : colAncho2;
       let columna = new Columna(x, this.y, ancho, this.altura, i);
       this.columnas.push(columna);
-      x += y += (i > 0 ? columnas[i - 1].ancho / 2 : 0) + columnas[i].ancho / 2 + margenX;
+      x += (i > 0 ? (i-1 % 2 === 0) ? colAncho1 : colAncho2 / 2 : 0) + (i % 2 === 0) ? colAncho1 : colAncho2 * 10 + margenX;
     }
   }
   

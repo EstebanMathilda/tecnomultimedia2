@@ -86,8 +86,13 @@ function setup() {
   for (let i = 0; i < numFilas; i++) {
     let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
     let fila = new Fila(y, altura);
-    filas.push(fila);
-    y += (i > 0 ? filas[i - 1].altura / 2 : 0) + altura / 2 + margenY;
+    filas.push(fila); 
+    if (i % 2 === 0) {
+      y += altura / 2 + margenY;
+    } else {
+      let alturaAnterior = filas[i - 1].altura;
+      y += (alturaAnterior / 2) + (altura / 2) + margenY;
+    }
   }
 }
 
