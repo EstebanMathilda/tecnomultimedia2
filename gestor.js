@@ -1,6 +1,6 @@
 
-let altoGestor = 100;
-let anchoGestor = 400;
+let altoGestor = 50;
+let anchoGestor = 200;
 
 
 

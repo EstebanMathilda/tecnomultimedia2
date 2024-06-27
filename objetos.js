@@ -14,20 +14,20 @@ class Fila {
       let ancho = (i % 2 === 0) ? colAncho1 : colAncho2;
       let columna = new Columna(x, this.y, ancho, this.altura, i);
       this.columnas.push(columna);
-      x += ancho + margenX;
+      x += y += (i > 0 ? columnas[i - 1].ancho / 2 : 0) + columnas[i].ancho / 2 + margenX;
     }
   }
   
   display() {
-    for (let columna of this.columnas) {
-      let nuevaAltura;
+    let nuevaAltura;
     if (this.index % 2 === 0) {
-      nuevaAltura = map(gestorAmp.filtrada, 0, 1, 25, 100); // Ajusta la altura de las filas pares 25,100
+      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura, 100); // Ajusta la altura de las filas pares 25,100
     } else {
-      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, 125,200); // Ajusta la altura de las filas impares 125,200
+      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, 125,this.altura); // Ajusta la altura de las filas impares 125,200
     }
+    for (let columna of this.columnas) {
       push();
-     
+      rectMode(CENTER);
       columna.actualizarAltura(nuevaAltura);
       columna.display();
       pop();

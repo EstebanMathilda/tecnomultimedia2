@@ -87,7 +87,7 @@ function setup() {
     let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
     let fila = new Fila(y, altura);
     filas.push(fila);
-    y += altura + margenY;
+    y += (i > 0 ? filas[i - 1].altura / 2 : 0) + altura / 2 + margenY;
   }
 }
 
@@ -128,29 +128,29 @@ function draw() {
     if (!haySonido) {
       //Estado SILENCIO
       push();
-    createFibers()
+    dibujarTextura()
     pop();
       let ahora = millis();
     }
   }
 
   if (monitorear) {
-    gestorAmp.dibujar(100, 100);
-    gestorPitch.dibujar(500, 100);
+    gestorAmp.dibujar(25, 25);
+    gestorPitch.dibujar(225, 25);
   }
 
   printData();
   antesHabiaSonido = haySonido;
 }
 
-function createFibers(){
+function dibujarTextura(){
   let numFibers = 150;
   if (frameCount % 10 === 0) {
   for (let i=0; i<numFibers; i++){
     let x1 = random() * displayWidth;
     let y1 = random() * displayHeight;
     let theta = random() * 2 * Math.PI;
-    let segmentLength = random() * 5 + 2;
+    let segmentLength = random() * 5 + 1;
     let x2 = cos(theta) * segmentLength + x1;
     let y2 = sin(theta) * segmentLength + y1;
     stroke(
