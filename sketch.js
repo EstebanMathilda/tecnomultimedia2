@@ -162,6 +162,7 @@ function getPitch() {
   pitch.getPitch(function (err, frequency) {
     if (frequency) {
       gestorPitch.actualizar(frequency);
+      //adjustRowHeights(gestorAmp.filtrada);
       //console.log(frequency);
     }
     getPitch();
