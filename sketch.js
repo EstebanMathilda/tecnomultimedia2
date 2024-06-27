@@ -4,7 +4,7 @@
 let monitorear = true;
 
 let AMP_MIN = 0.02;
-let AMP_MAX = 0.1;
+let AMP_MAX = 0.05;
 
 let FREC_MIN = 20;
 let FREC_MAX = 800;
@@ -86,13 +86,9 @@ function setup() {
   for (let i = 0; i < numFilas; i++) {
     let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
     let fila = new Fila(y, altura);
-    filas.push(fila); 
-    if (i % 2 === 0) {
-      y += altura / 2 + margenY;
-    } else {
-      let alturaAnterior = filas[i - 1].altura;
-      y += (alturaAnterior / 2) + (altura / 2) + margenY;
-    }
+    filas.push(fila);
+    y += altura + margenY;
+    //y += (i > 0 ? (i % 2 === 0) ? filas[i].altura / 2: filas[i].altura * 2 : filas[i].altura * 2) + margenY;
   }
 }
 

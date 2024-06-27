@@ -14,7 +14,8 @@ class Fila {
       let ancho = (i % 2 === 0) ? colAncho1 : colAncho2;
       let columna = new Columna(x, this.y, ancho, this.altura, i);
       this.columnas.push(columna);
-      x += (i > 0 ? (i-1 % 2 === 0) ? colAncho1 : colAncho2 / 2 : 0) + (i % 2 === 0) ? colAncho1 : colAncho2 * 10 + margenX;
+      x += ancho + margenX;
+     // x += (i > 0 ? (i % 2 === 0) ? colAncho1 + margenX * 6 : colAncho2 : colAncho1) + margenX;
     }
   }
   
@@ -27,7 +28,7 @@ class Fila {
     }
     for (let columna of this.columnas) {
       push();
-      rectMode(CENTER);
+      rectMode(CORNER);
       columna.actualizarAltura(nuevaAltura);
       columna.display();
       pop();
