@@ -77,10 +77,6 @@ function setup() {
 
   antesHabiaSonido = false;
 
-  cantidadFilas = random(5, 11);
-  cantidadColumnas = random(5, 7);
-  cantidadCeldas = random(10, 12);
-
   // Crear las filas
   let y = margen;
   for (let i = 0; i < numFilas; i++) {

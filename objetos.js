@@ -51,8 +51,8 @@ class Columna {
 
     let celdaAncho = this.ancho / 10;
     for (let i = 0; i < 10; i++) {
-      //let brillo = map(i, 0, 9, 0, 255);
-      this.celdas.push(new Celda(this.x + i * celdaAncho, this.y, celdaAncho, this.altura, this.color, this.brillo, this.tinte, this.saturacion, this.brillo));
+      let brillo = map(i, 0, this.brillo, 0, 100);
+      this.celdas.push(new Celda(this.x + i * celdaAncho, this.y, celdaAncho, this.altura, this.color, brillo, this.tinte, this.saturacion, this.brillo));
     }
 
     this.desfase = random(-2.0, 2.0);
@@ -60,11 +60,11 @@ class Columna {
   }
   
   display() {
-    this.dibujarRect();
     for (let celda of this.celdas) {
       //let crece = (celda % 2 === 0) ? map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/2, 0, this.altura) : this.altura;
       celda.display();
     }
+    //this.dibujarRect();
   }
 
   actualizarAltura(nuevaAltura) {
@@ -75,8 +75,12 @@ class Columna {
   }
   
   dibujarRect() {
-    fill(this.tinte, this.saturacion, map(sin((frameCount * 0.05 + this.index) * 0.4), -1, 1, 0, 255));
+    push();
+    //fill(this.tinte, this.saturacion, map(sin((frameCount * this.velocidad + this.index) * 0.4), -1, 1, 100, 200));
+    //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
+    fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/4, 0, this.hue), this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
+    pop();
   }
 
 }
@@ -96,15 +100,28 @@ class Celda {
   }
   
   display() {
-    /*
-    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), this.brilloOriginal);
-    c = lerpColor(c, color(255), this.brillo / 255);
+    
+    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), this.brillo);
+    c = lerpColor(c, color(255), this.brillo / 100);
     fill(c);
-    */
+    
     push();
     //rectMode(CENTER);
+    //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();
+  }
+
+  colorear() {
+    //fill(this.tinte, this.saturacion, map(sin((frameCount * this.velocidad + this.index) * 0.4), -1, 1, 100, 200));
+    let c = color(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), this.brilloOriginal);
+    c = lerpColor(c, color(255), this.brillo / 255);
+    fill(c);
+
+
+    fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/4, 0, this.hue), this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
+    rect(this.x, this.y, this.ancho, this.altura);
+    
   }
 
   actualizarAltura(nuevaAltura) {
