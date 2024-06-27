@@ -26,18 +26,19 @@ let cantidadFilas;
 let cantidadColumnas;
 let cantidadCeldas;
 
-let totalCeldas;
-
 let colorPaleta;
 let colorRandom;
 
 let imagenesPaleta = [];
 
+let textura;
+
 let marca;
 
 let filas = [];
 let numFilas
-let margen = 10;
+let margenY = 10;
+let margenX = 4;
 
 const model_url =
   "https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/";
@@ -49,6 +50,8 @@ function preload() {
     "paleta/paleta_3.png",
     "paleta/paleta_4.png",
   ];
+
+  textura = loadImage("data/textura.png");
 
   // Carga de las imágenes de trazos figura en el array imagen_paleta_fondo
   for (let i = 0; i < urls_img.length; i++) {
@@ -79,12 +82,12 @@ function setup() {
 
   // Crear las filas
   numFilas = 8;
-  let y = margen;
+  let y = margenY;
   for (let i = 0; i < numFilas; i++) {
     let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
     let fila = new Fila(y, altura);
     filas.push(fila);
-    y += altura + margen;
+    y += altura + margenY;
   }
 }
 
@@ -103,7 +106,11 @@ function draw() {
      for (let fila of filas) {
       fila.display();
     }
-
+    marco();
+    
+    image(textura, 0, 0, displayWidth, displayHeight);
+    
+    
     if (inicioElSonido) {
       
     }
@@ -116,9 +123,13 @@ function draw() {
     if (finDelSonido) {
       //Evento
       marca = millis();
+      
     }
     if (!haySonido) {
       //Estado SILENCIO
+      push();
+    createFibers()
+    pop();
       let ahora = millis();
     }
   }
@@ -130,6 +141,27 @@ function draw() {
 
   printData();
   antesHabiaSonido = haySonido;
+}
+
+function createFibers(){
+  let numFibers = 150;
+  if (frameCount % 10 === 0) {
+  for (let i=0; i<numFibers; i++){
+    let x1 = random() * displayWidth;
+    let y1 = random() * displayHeight;
+    let theta = random() * 2 * Math.PI;
+    let segmentLength = random() * 5 + 2;
+    let x2 = cos(theta) * segmentLength + x1;
+    let y2 = sin(theta) * segmentLength + y1;
+    stroke(
+      0,
+      10-random() * 5,
+      20-random() * 8,
+      random() * 2 + 10
+    );
+    line(x1, y1, x2, y2);
+  }
+}
 }
 
 function windowResized() {
@@ -144,6 +176,12 @@ function printData() {
   console.log(estado);
   console.log(gestorAmp.filtrada);
   console.log(gestorPitch.filtrada);
+}
+function keyPressed() {
+  if (key == 'f') {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
 }
 
 // ---- Pitch detection ---

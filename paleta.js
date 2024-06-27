@@ -16,7 +16,7 @@ class paleta {
       let { hue, saturation, brightness, alpha } = rgbToHsb(pixelColor);
 
       // Verificar si el color es "muy oscuro" (saturación y brillo bajos)
-      if (saturation < 35 || brightness < 40 || hue < 130 && hue > 60 || hue > 290) {
+      if (saturation < 30 || brightness < 15 || hue < 130 && hue > 60 || hue > 290) {
         // Generar nuevos valores de coordenadas y obtener un nuevo color
         continue;
       }
