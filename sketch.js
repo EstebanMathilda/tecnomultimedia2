@@ -36,7 +36,7 @@ let imagenesPaleta = [];
 let marca;
 
 let filas = [];
-let numFilas = 5;
+let numFilas
 let margen = 10;
 
 const model_url =
@@ -62,7 +62,7 @@ function setup() {
   createCanvas(displayWidth, displayHeight);
 
   background(0);
-
+  
   audioContext = getAudioContext(); // inicia el motor de audio
   mic = new p5.AudioIn(); // inicia el micrófono
   mic.start(startPitch); // se enciende el micrófono y le transmito el analisis de frecuencia (pitch) al micrófono. Conecto la libreria con el micrófono
@@ -78,9 +78,10 @@ function setup() {
   antesHabiaSonido = false;
 
   // Crear las filas
+  numFilas = 8;
   let y = margen;
   for (let i = 0; i < numFilas; i++) {
-    let altura = i % 2 === 0 ? 100 : 200;
+    let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
     let fila = new Fila(y, altura);
     filas.push(fila);
     y += altura + margen;
@@ -91,7 +92,7 @@ function draw() {
   let vol = mic.getLevel(); // cargo en vol la amplitud del micrófono (señal cruda);
   gestorAmp.actualizar(vol);
 
-  haySonido = gestorAmp.filtrada > 0.1; // umbral de ruido que define el estado haySonido
+  haySonido = gestorAmp.filtrada > AMP_MIN; // umbral de ruido que define el estado haySonido
 
   let inicioElSonido = haySonido && !antesHabiaSonido; // evendo de INICIO de un sonido
   let finDelSonido = !haySonido && antesHabiaSonido; // evento de fIN de un sonido

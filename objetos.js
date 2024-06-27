@@ -5,7 +5,7 @@ class Fila {
     this.columnas = [];
     
     // Crear las columnas para ocupar todo el ancho, incluyendo márgenes
-    let numColumnas = int(random(5, 8));
+    let numColumnas = int(random(5, 10));
     let x = margen;
     let totalWidth = windowWidth - (numColumnas + 1) * margen;
     let colAncho1 = totalWidth / (numColumnas + 0.5);
@@ -101,7 +101,7 @@ class Celda {
   
   display() {
     
-    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), this.brillo);
+    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), map(gestorPitch.filtrada, 0.0, 1.0, 0, this.brilloOriginal));
     c = lerpColor(c, color(255), this.brillo / 100);
     fill(c);
     
@@ -110,18 +110,6 @@ class Celda {
     //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();
-  }
-
-  colorear() {
-    //fill(this.tinte, this.saturacion, map(sin((frameCount * this.velocidad + this.index) * 0.4), -1, 1, 100, 200));
-    let c = color(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), this.brilloOriginal);
-    c = lerpColor(c, color(255), this.brillo / 255);
-    fill(c);
-
-
-    fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/4, 0, this.hue), this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
-    rect(this.x, this.y, this.ancho, this.altura);
-    
   }
 
   actualizarAltura(nuevaAltura) {
