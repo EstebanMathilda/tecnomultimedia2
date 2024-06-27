@@ -56,6 +56,7 @@ class Columna {
     }
 
     this.desfase = random(-2.0, 2.0);
+    this.velocidad = random(0.05, 0.15);
   }
   
   display() {
@@ -74,7 +75,7 @@ class Columna {
   }
   
   dibujarRect() {
-    fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
+    fill(this.tinte, this.saturacion, map(sin((frameCount * 0.05 + this.index) * 0.4), -1, 1, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
   }
 
