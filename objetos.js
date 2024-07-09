@@ -28,8 +28,8 @@ class Fila {
     }
     for (let columna of this.columnas) {
       push();
-      rectMode(CENTER);
-      translate(columna.ancho / 2, columna.altura / 2);
+      //rectMode(CENTER);
+      //translate(columna.ancho / 2, columna.altura / 2);
       columna.actualizarAltura(nuevaAltura);
       columna.display();
       pop();
@@ -53,7 +53,7 @@ class Columna {
     this.ancho = ancho;
     this.altura = altura;
     this.index = index;
-    this.numCeldas = floor(random(9,10));
+    this.numCeldas = floor(10);
     
     colorRandom = colorPaleta.darUnColor();
     this.tinte = colorRandom.hue;
@@ -116,7 +116,7 @@ class Celda {
     fill(c);
     
     push();
-    rectMode(CENTER);
+    rectMode(CORNER);
     //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();
