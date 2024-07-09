@@ -38,7 +38,7 @@ let marca;
 let filas = [];
 let numFilas
 let margenY = 10;
-let margenX = 4;
+let margenX = 0;
 
 const model_url =
   "https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/";

@@ -28,7 +28,8 @@ class Fila {
     }
     for (let columna of this.columnas) {
       push();
-      rectMode(CORNER);
+      rectMode(CENTER);
+      translate(columna.ancho / 2, columna.altura / 2);
       columna.actualizarAltura(nuevaAltura);
       columna.display();
       pop();
@@ -115,7 +116,7 @@ class Celda {
     fill(c);
     
     push();
-    //rectMode(CENTER);
+    rectMode(CENTER);
     //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();
