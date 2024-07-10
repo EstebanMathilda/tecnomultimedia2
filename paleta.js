@@ -1,12 +1,13 @@
 class paleta {
   constructor(imagenPaleta) {
     this.imagenPaleta = this.elegirImagenAleatoria(imagenPaleta);
+    this.paletas = imagenPaleta;
   }
 
   // Paleta fondo
   darUnColor() {
     let x, y, pixelColor;
-
+    console.log("paleta " + this.paletas[0]);
     do {
       x = int(random(this.imagenPaleta.width));
       y = int(random(this.imagenPaleta.height));
@@ -15,12 +16,44 @@ class paleta {
 
       let { hue, saturation, brightness, alpha } = rgbToHsb(pixelColor);
 
-      // Verificar si el color es "muy oscuro" (saturación y brillo bajos)
-      if (this.imagenPaleta === saturation < 30 || brightness < 15 || hue < 130 && hue > 60 || hue > 290) {
-        // Generar nuevos valores de coordenadas y obtener un nuevo color
-        continue;
+      // Filtro para la primera imagen
+      if (this.imagenPaleta === this.paletas[0]) {
+        if (saturation < 20 ||
+          brightness < 50 ||
+          hue > 60 &&
+          hue < 155 ||
+          hue > 270 || alpha < 75) {
+          continue;
+        }
       }
-
+      // Filtro para la segunda imagen
+      else if (this.imagenPaleta === this.paletas[1]) {
+        if (saturation < 20 ||
+          brightness < 50 ||
+          hue > 60 &&
+          hue < 155 ||
+          hue > 270 || alpha < 75) {
+          continue;
+        }
+      }
+      // Filtro para la tercera imagen
+      else if (this.imagenPaleta === this.paletas[2]) {
+        if (saturation < 20 ||
+          brightness < 50 ||
+          hue > 60 &&
+          hue < 155 ||
+          hue > 270 || alpha < 75) {
+          continue;
+        }
+      } else if (this.imagenPaleta === this.paletas[3]) {
+        if (saturation < 20 ||
+          brightness < 50 ||
+          hue > 60 &&
+          hue < 155 ||
+          hue > 270 || alpha < 75) {
+          continue;
+        }
+      }
       return { hue, saturation, brightness, alpha };
     } while (true);
   }

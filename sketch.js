@@ -1,13 +1,13 @@
 // Comisión de Matías - Joray (77302/9); Esteban (93509/6); Galasso (94698/3); Farías Jomñuk (86909/7).
 // Video explicativo: https://youtu.be/i5E8lyjL_Lk
 
-let monitorear = true;
+let monitorear = false;
 
 let AMP_MIN = 0.02;
 let AMP_MAX = 0.05;
 
 let FREC_MIN = 20;
-let FREC_MAX = 800;
+let FREC_MAX = 700;
 
 let mic;
 let pitch;
@@ -37,7 +37,7 @@ let marca;
 
 let filas = [];
 let numFilas
-let margenY = 10;
+let margenY = 25;
 let margenX = 0;
 
 const model_url =
@@ -75,7 +75,7 @@ function setup() {
   gestorAmp = new GestorSenial(AMP_MIN, AMP_MAX);
   gestorPitch = new GestorSenial(FREC_MIN, FREC_MAX);
 
-  colorMode(HSB, 360, 100, 100, 1);
+  colorMode(HSB, 360, 100, 100, 100);
   colorPaleta = new paleta(imagenesPaleta);
 
   antesHabiaSonido = false;
@@ -84,7 +84,7 @@ function setup() {
   numFilas = 8;
   let y = margenY;
   for (let i = 0; i < numFilas; i++) {
-    let altura = i % 2 === 0 ? floor(random(25,100)) : floor(random(125,200));
+    let altura = i % 2 === 0 ? floor(random(25,50)) : floor(random(50,100));
     let fila = new Fila(y, altura);
     filas.push(fila);
     y += altura + margenY;
@@ -95,6 +95,7 @@ function setup() {
 function draw() {
   let vol = mic.getLevel(); // cargo en vol la amplitud del micrófono (señal cruda);
   gestorAmp.actualizar(vol);
+  
 
   haySonido = gestorAmp.filtrada > AMP_MIN; // umbral de ruido que define el estado haySonido
 
@@ -104,8 +105,11 @@ function draw() {
   if (estado == "inicio") {
      // Dibujar las filas
      background(0);
+     push();
+      //rectMode(CENTER);
      for (let fila of filas) {
       fila.display();
+      pop();
     }
     marco();
     
@@ -174,9 +178,9 @@ function windowResized() {
 // ---- Debug ---
 function printData() {
   //background(255);
-  console.log(estado);
-  console.log(gestorAmp.filtrada);
-  console.log(gestorPitch.filtrada);
+  //console.log(estado);
+  //console.log(gestorAmp.filtrada);
+  //console.log(gestorPitch.filtrada);
 }
 function keyPressed() {
   if (key == 'f') {
@@ -196,11 +200,11 @@ function modelLoaded() {
 
 function getPitch() {
   pitch.getPitch(function (err, frequency) {
-    if (frequency) {
+    
       gestorPitch.actualizar(frequency);
       //adjustRowHeights(gestorAmp.filtrada);
       //console.log(frequency);
-    }
+    
     getPitch();
   });
 }

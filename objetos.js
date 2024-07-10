@@ -21,26 +21,37 @@ class Fila {
   
   display() {
     let nuevaAltura;
+    let nuevaPosY;
     if (this.index % 2 === 0) {
-      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura, 100); // Ajusta la altura de las filas pares 25,100
+      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura, 50); // EXPANDE la altura de las filas pares 25,100
+      //nuevaPosY = map(gestorAmp.filtrada, 0, 1, this.y, 100);
     } else {
-      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, 125,this.altura); // Ajusta la altura de las filas impares 125,200
+      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, 50,this.altura); // CONTRAE la altura de las filas impares 125,200
+      //nuevaPosY = map(gestorAmp.filtrada, 0, 1, 100, this.y);
     }
     for (let columna of this.columnas) {
+      
       push();
-      //rectMode(CENTER);
-      //translate(columna.ancho / 2, columna.altura / 2);
-      columna.actualizarAltura(nuevaAltura);
+      rectMode(RADIUS);
+      if (columna === this.columnas[0]) {
+        translate(0, columna.altura);
+      } else {
+        translate(0, columna.altura);
+      }
+      columna.actualizarAltura(nuevaAltura, nuevaPosY);
       columna.display();
       pop();
     }
   }
 
 
-actualizarAltura(nuevaAltura) {
+actualizarAltura(nuevaAltura, nuevaPosY) {
   this.altura = nuevaAltura;
+  //this.y = nuevaPosY;
   for (let columna of this.columnas) {
-    columna.actualizarAltura(nuevaAltura);
+    columna.actualizarAltura(nuevaAltura, nuevaPosY);
+    //this.y =- nuevaAltura - this.altura;
+    //this.y =- nuevaPosY - this.altura;
   }
 }
 
@@ -70,28 +81,23 @@ class Columna {
   }
   
   display() {
+    push();
+    rectMode(RADIUS);
     for (let celda of this.celdas) {
       //let crece = (celda % 2 === 0) ? map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/2, 0, this.altura) : this.altura;
       celda.display();
     }
-    //this.dibujarRect();
-  }
-
-  actualizarAltura(nuevaAltura) {
-    this.altura = nuevaAltura;
-    for (let celda of this.celdas) {
-      celda.actualizarAltura(nuevaAltura);
-    }
-  }
-  
-  dibujarRect() {
-    push();
-    //fill(this.tinte, this.saturacion, map(sin((frameCount * this.velocidad + this.index) * 0.4), -1, 1, 100, 200));
-    //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
-    fill(map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/4, 0, this.hue), this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
-    rect(this.x, this.y, this.ancho, this.altura);
     pop();
   }
+
+  actualizarAltura(nuevaAltura, nuevaPosY) {
+    this.altura = nuevaAltura;
+    //this.y = nuevaPosY;
+    for (let celda of this.celdas) {
+      celda.actualizarAltura(nuevaAltura, nuevaPosY);
+    }
+  }
+
 
 }
 
@@ -111,30 +117,20 @@ class Celda {
   
   display() {
     
-    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), map(gestorPitch.filtrada, 0.0, 1.0, 0, this.brilloOriginal));
+    let c = color(this.tinte, map(sin((frameCount * 0.1 + this.x / this.ancho) * 0.4), -1, 5, 0, 255), map(gestorPitch.filtrada, 0, 1, 0, this.brilloOriginal));
     c = lerpColor(c, color(255), this.brillo / 100);
     fill(c);
     
     push();
-    rectMode(CORNER);
+    rectMode(RADIUS);
     //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();
   }
 
-  actualizarAltura(nuevaAltura) {
+  actualizarAltura(nuevaAltura, nuevaPosY) {
     this.altura = nuevaAltura;
-  }
-}
-
-function adjustRowHeights(amplitud) {
-  // Mapea la frecuencia a un valor entre 100 y 200
-  let nuevaAltura = map(amplitud, FREC_MIN, FREC_MAX, 100, 200);
-  let y = margenY;
-  for (let i = 0; i < filas.length; i++) {
-    filas[i].actualizarAltura(nuevaAltura);
-    filas[i].y = y;
-    y += filas[i].altura + margenY;
+   // this.y = nuevaPosY;
   }
 }
 
