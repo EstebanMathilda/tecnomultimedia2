@@ -1,7 +1,7 @@
 class Fila {
   constructor(y, altura) {
-    this.y = y;
     this.altura = altura;
+    this.y = y + altura/2;
     this.columnas = [];
     
     // Crear las columnas para ocupar todo el ancho, incluyendo márgenes
@@ -23,21 +23,21 @@ class Fila {
     let nuevaAltura;
     let nuevaPosY;
     if (this.index % 2 === 0) {
-      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura, 50); // EXPANDE la altura de las filas pares 25,100
+      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, this.altura, this.altura + 80); // EXPANDE la altura de las filas pares 25,100
       //nuevaPosY = map(gestorAmp.filtrada, 0, 1, this.y, 100);
     } else {
-      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, 50,this.altura); // CONTRAE la altura de las filas impares 125,200
+      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura - 20, this.altura); // CONTRAE la altura de las filas impares 125,200
       //nuevaPosY = map(gestorAmp.filtrada, 0, 1, 100, this.y);
     }
     for (let columna of this.columnas) {
       
       push();
-      rectMode(RADIUS);
-      if (columna === this.columnas[0]) {
-        translate(0, columna.altura);
+      /* if (columna === this.columnas[0]) {
+        translate(0, 0);
       } else {
-        translate(0, columna.altura);
-      }
+        translate(0, 0);
+      } */
+      rectMode(CENTER);
       columna.actualizarAltura(nuevaAltura, nuevaPosY);
       columna.display();
       pop();
@@ -82,7 +82,7 @@ class Columna {
   
   display() {
     push();
-    rectMode(RADIUS);
+    rectMode(CENTER);
     for (let celda of this.celdas) {
       //let crece = (celda % 2 === 0) ? map(gestorAmp.filtrada, AMP_MIN, AMP_MAX, 0, height/2, 0, this.altura) : this.altura;
       celda.display();
@@ -122,7 +122,7 @@ class Celda {
     fill(c);
     
     push();
-    rectMode(RADIUS);
+    rectMode(CENTER);
     //fill(this.tinte, this.saturacion, map(sin((frameCount * 0.1 + this.index) * 0.4), -1, 5, 0, 255));
     rect(this.x, this.y, this.ancho, this.altura);
     pop();

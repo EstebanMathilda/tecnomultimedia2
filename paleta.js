@@ -6,51 +6,62 @@ class paleta {
 
   // Paleta fondo
   darUnColor() {
-    let x, y, pixelColor;
-    console.log("paleta " + this.paletas[0]);
+    let x, y, pixelColor, gris;
+    console.log(this.paletas[0]);
+    console.log(this.imagenPaleta);
     do {
       x = int(random(this.imagenPaleta.width));
       y = int(random(this.imagenPaleta.height));
-
+      gris = int(random(1,5));
       pixelColor = this.imagenPaleta.get(x, y);
 
       let { hue, saturation, brightness, alpha } = rgbToHsb(pixelColor);
 
       // Filtro para la primera imagen
       if (this.imagenPaleta === this.paletas[0]) {
-        if (saturation < 20 ||
-          brightness < 50 ||
+        /* if (gris % 2 === 0) {
+          saturation = 1; 
+          brightness = 1;
+          hue = 1;
+          console.log(hue, saturation, brightness, alpha);
+        } else */ if(saturation < 20 ||
+          brightness < 45 ||
           hue > 60 &&
           hue < 155 ||
-          hue > 270 || alpha < 75) {
+          hue > 270) {
           continue;
         }
       }
       // Filtro para la segunda imagen
       else if (this.imagenPaleta === this.paletas[1]) {
-        if (saturation < 20 ||
-          brightness < 50 ||
+        /* if (gris % 2 === 0) {
+          saturation = 1;
+          brightness = 1;
+          hue = 1;
+          console.log(hue, saturation, brightness, alpha);
+        } else */ if(saturation < 20 ||
+          brightness < 45 ||
           hue > 60 &&
           hue < 155 ||
-          hue > 270 || alpha < 75) {
+          hue > 270) {
           continue;
         }
       }
       // Filtro para la tercera imagen
       else if (this.imagenPaleta === this.paletas[2]) {
         if (saturation < 20 ||
-          brightness < 50 ||
+          brightness < 45 ||
           hue > 60 &&
           hue < 155 ||
-          hue > 270 || alpha < 75) {
+          hue > 270) {
           continue;
         }
       } else if (this.imagenPaleta === this.paletas[3]) {
         if (saturation < 20 ||
-          brightness < 50 ||
+          brightness < 65 ||
           hue > 60 &&
           hue < 155 ||
-          hue > 270 || alpha < 75) {
+          hue > 270) {
           continue;
         }
       }
@@ -64,14 +75,6 @@ class paleta {
     return imagenes[index];
   }
 
-  //testeo
-  debug(opcion) {
-    if (opcion == 1) {
-      image(this.imagenPaleta_figura, 0, 0);
-    } else if (opcion == 2) {
-      image(this.imagenPaleta, 0, 0);
-    }
-  }
 }
 
 // Transformar RGB a HSB

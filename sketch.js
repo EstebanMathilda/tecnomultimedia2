@@ -7,7 +7,7 @@ let AMP_MIN = 0.02;
 let AMP_MAX = 0.05;
 
 let FREC_MIN = 20;
-let FREC_MAX = 700;
+let FREC_MAX = 300;
 
 let mic;
 let pitch;
@@ -37,7 +37,7 @@ let marca;
 
 let filas = [];
 let numFilas
-let margenY = 25;
+
 let margenX = 0;
 
 const model_url =
@@ -75,16 +75,17 @@ function setup() {
   gestorAmp = new GestorSenial(AMP_MIN, AMP_MAX);
   gestorPitch = new GestorSenial(FREC_MIN, FREC_MAX);
 
-  colorMode(HSB, 360, 100, 100, 100);
+  colorMode(HSB, 360, 100, 100, 1);
   colorPaleta = new paleta(imagenesPaleta);
 
   antesHabiaSonido = false;
 
   // Crear las filas
-  numFilas = 8;
-  let y = margenY;
+  numFilas = 10;
+  let y = 20;
   for (let i = 0; i < numFilas; i++) {
-    let altura = i % 2 === 0 ? floor(random(25,50)) : floor(random(50,100));
+    let altura = i % 2 === 0 ? floor(random(25,75)) : floor(random(75,125));
+    let margenY = i % 2 === 0 ? 10 : 10;
     let fila = new Fila(y, altura);
     filas.push(fila);
     y += altura + margenY;
@@ -105,9 +106,10 @@ function draw() {
   if (estado == "inicio") {
      // Dibujar las filas
      background(0);
-     push();
+     
       //rectMode(CENTER);
      for (let fila of filas) {
+      push();
       fila.display();
       pop();
     }
