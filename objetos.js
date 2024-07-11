@@ -14,7 +14,7 @@ class Fila {
       let ancho = (i % 2 === 0) ? colAncho1 : colAncho2;
       let columna = new Columna(x, this.y, ancho, this.altura, i);
       this.columnas.push(columna);
-      x += ancho + margenX;
+      x += ancho - (numColumnas) * 1.5;
      // x += (i > 0 ? (i % 2 === 0) ? colAncho1 + margenX * 6 : colAncho2 : colAncho1) + margenX;
     }
   }
@@ -23,10 +23,10 @@ class Fila {
     let nuevaAltura;
     let nuevaPosY;
     if (this.index % 2 === 0) {
-      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, this.altura, this.altura + 80); // EXPANDE la altura de las filas pares 25,100
+      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura, this.altura+80); // EXPANDE la altura de las filas pares 25,100
       //nuevaPosY = map(gestorAmp.filtrada, 0, 1, this.y, 100);
     } else {
-      nuevaAltura = map(gestorAmp.filtrada, 0, 1, this.altura - 20, this.altura); // CONTRAE la altura de las filas impares 125,200
+      nuevaAltura = map(1-gestorAmp.filtrada, 0, 1, this.altura-20, this.altura); // CONTRAE la altura de las filas impares 125,200
       //nuevaPosY = map(gestorAmp.filtrada, 0, 1, 100, this.y);
     }
     for (let columna of this.columnas) {
@@ -139,7 +139,7 @@ function marco() {
   push();
   rectMode(CENTER);
   fill(0, 0);
-  strokeWeight(30);
+  strokeWeight(40);
   stroke(0);
      rect(displayWidth / 2, displayHeight / 2, displayWidth, displayHeight);
      pop();

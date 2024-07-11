@@ -1,5 +1,5 @@
 // Comisión de Matías - Joray (77302/9); Esteban (93509/6); Galasso (94698/3); Farías Jomñuk (86909/7).
-// Video explicativo: https://youtu.be/i5E8lyjL_Lk
+// Video explicativo:
 
 let monitorear = false;
 
@@ -7,7 +7,7 @@ let AMP_MIN = 0.02;
 let AMP_MAX = 0.05;
 
 let FREC_MIN = 20;
-let FREC_MAX = 300;
+let FREC_MAX = 650;
 
 let mic;
 let pitch;
@@ -82,7 +82,7 @@ function setup() {
 
   // Crear las filas
   numFilas = 10;
-  let y = 20;
+  let y = 5;
   for (let i = 0; i < numFilas; i++) {
     let altura = i % 2 === 0 ? floor(random(25,75)) : floor(random(75,125));
     let margenY = i % 2 === 0 ? 10 : 10;
